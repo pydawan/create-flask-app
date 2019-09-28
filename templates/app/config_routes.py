@@ -1,0 +1,5 @@
+    api.add_resource(%tabela%PorId, f'{BASE_PATH}/%tabela%/<%campo%>', methods=['GET'], endpoint='get_%tabela%_por_id')
+    api.add_resource(Todos%tabela%s, f'{BASE_PATH}/%tabela%', methods=['GET'], endpoint='get_Todos%tabela%')
+    api.add_resource(Todos%tabela%s, f'{BASE_PATH}/%tabela%', methods=['POST'], endpoint='post_%tabela%')
+    api.add_resource(Todos%tabela%s, f'{BASE_PATH}/%tabela%', methods=['PUT'], endpoint='put_%tabela%')
+    api.add_resource(%tabela%PorId, f'{BASE_PATH}/%tabela%/<%campo%>', methods=['DELETE'], endpoint='delete_%tabela%')
