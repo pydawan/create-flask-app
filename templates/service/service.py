@@ -9,8 +9,11 @@ from util.messages import (
 )
 
 class %tabela%Service:
-    def __init__(self):
-        self.table = DynamoTable(%tabela%Model, '%tabela%')
+    def __init__(self, table=None):
+        if table:
+            self.table = table
+        else:
+            self.table = DynamoTable(%tabela%Model, '%tabela%')
 
     def find(self, params, %campo%=None):
         if %campo%:

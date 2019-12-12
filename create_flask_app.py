@@ -11,7 +11,7 @@ def extrai_info(expr, parent=None):
         while expr:
                 char = expr[0]
                 expr = expr[1:]
-                if char in ['{', '}', ',']:
+                if char in ['[', ']', ',']:
                         if item:
                                 item = item.strip()
                                 if item[0] == '/':
@@ -32,12 +32,12 @@ def extrai_info(expr, parent=None):
                                 elif parent:
                                         parent['campo'] = item
                                 item = ''
-                        if char == '{':
+                        if char == '[':
                                 sub, expr = extrai_info(expr, obj_dados)
                                 if not sub:
                                         continue
                                 result += sub
-                        elif char == '}' and parent:
+                        elif char == ']' and parent:
                                 break
                 else:
                         item += char
@@ -91,15 +91,43 @@ def copy_util(dst):
 
 def field_type(field):
         prefixos = {
-                'nm': 'Str',
-                'tx': 'Str',
-                'id': 'Str',
-                'nr': 'Integer',
-                'in': 'Boolean',
-                'vl': 'Float',
-                'dt': 'Date'
+                'nm': {
+                        "type":'Str',
+                        "default": "12"
+                },
+                'tx': {
+                        "type":'Str',
+                        "default": "121"
+                },
+                'id': {
+                        "type":'Str',
+                        "default": "1212"
+                },
+                'nr': {
+                        "type":'Integer',
+                        "default": 1212
+                },
+                'in': {
+                        "type":'Boolean',
+                        "default": False
+                },
+                'vl': {
+                        "type":'Float',
+                        "default": 12.12
+                },
+                'dt': {
+                        "type":'Date',
+                        "default": '2019-12-12'
+                }
         }
-        return prefixos.get(field[:2], 'Str')
+        result = prefixos.get(
+                field[:2],
+                {
+                        "type": 'Str',
+                        "default": "000"
+                }
+        )
+        return result['type'], result['default']
 
 def exec_cmd():
         if len(sys.argv) < 3:
@@ -107,13 +135,13 @@ def exec_cmd():
                 *** Create-Flask-App ***
 
                 Uso:
-                > python create_flask_app.py <nome-API> <rota>{dominio...}
+                > python create_flask_app.py <nome-API> +<rota>[dominio...]
 
                 Exemplo:
-                > python create_flask_app.py Pessoa /cliente{/genero,/documento{nmCpf}/financeiro{nrConta}}/faixa{vlMinimo}/evento{dtEvento}
+                > python create_flask_app.py Pessoa +cliente[+genero,+documento[nmCpf]+financeiro[nrConta]]+faixa[vlMinimo]+evento[dtEvento]
                 """)
                 return
-        cmd = sys.argv[2]
+        cmd = sys.argv[2].replace('+', '/')
         info = extrai_info(cmd)[0]
         app_parts = {}
         app_parts['nome_API'] = sys.argv[1]
@@ -121,7 +149,7 @@ def exec_cmd():
                 item['nome_API'] = sys.argv[1]
                 if 'campo' not in item:
                         item['campo'] = 'id'
-                item['tipo'] = field_type(item['campo'])
+                item['tipo'], item['default'] = field_type(item['campo'])
                 print('*', end = '')
                 for part in ['config_routes', 'imports', 'swagger_details']:
                         content = app_parts.get(part, '')
@@ -132,7 +160,7 @@ def exec_cmd():
                                 False
                         )
                         print('+', end = '')
-                for part in ['model', 'resource', 'service']:
+                for part in ['model', 'resource', 'service', 'tests']:
                         lista_nested = item.get('nested', [])
                         if part == 'resource':
                                 for sub in ['res_por_id.py', 'todos_res.py']:
