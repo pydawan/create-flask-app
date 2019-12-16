@@ -3,6 +3,8 @@ Objetos para usar como
 mock dos dados de teste (*)
 """
 
+import json
+
 class FakeTable:
     """
     Classe que não é de um banco
@@ -20,7 +22,8 @@ class FakeTable:
         self.key_list = key_list
         self.internal_data = []
 
-    def default_values():
+    def default_values(self):
+        return json.loads(self.validator.dumps(''))
 
     def insert(self, json):
         errors = self.validator.validate(json)
