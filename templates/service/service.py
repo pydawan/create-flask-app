@@ -18,30 +18,30 @@ class %tabela%Service:
 
     def find(self, params, %campo%=None):
         if %campo%:
-            logging.info(f'Procurando "{%campo%}" ...')
+            logging.info(f'Procurando "{%campo%}" em %tabela% ...')
             found = self.table.find_one([%campo%])
         else:
-            logging.info('Procurando vários registros...')
+            logging.info('Procurando vários registros de %tabela%...')
             found = self.table.find_all(20, self.table.get_conditions(params))
         if not found:
             return resp_not_found()
         return resp_get_ok(found)
 
     def insert(self, json):
-        logging.info('Novo registro será gravado')
+        logging.info('Novo registro será gravado em %tabela%')
         erros = self.table.insert(json)
         if erros:
             return resp_erro(erros)
         return resp_post_ok()
 
     def update(self, json):
-        logging.info('Alterando registro')
+        logging.info('Alterando registro de %tabela%')
         erros = self.table.update(json)
         if erros:
             return resp_erro(erros)
         return resp_ok("objeto atualizado com sucesso")
         
     def delete(self, %campo%):
-        logging.info('Excluindo registro')
+        logging.info('Excluindo registro de %tabela%')
         self.table.delete(%campo%)
         return resp_ok("objeto deletado com sucesso")
