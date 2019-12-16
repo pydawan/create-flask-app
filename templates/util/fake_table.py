@@ -9,7 +9,7 @@ class FakeTable:
     de dados de verdade, mas apenas
     para (*) testes unitários
     """
-    def __init__(self, schema, generate_values):
+    def __init__(self, schema):
         self.validator = schema()
         key_list = []
         field_defs = self.validator.declared_fields
@@ -18,12 +18,9 @@ class FakeTable:
             if field.metadata.get('primary_key'):
                 key_list.append(name)
         self.key_list = key_list
-        if generate_values:
-            self.internal_data = [
-                self.validator.load({})
-            ]
-        else:
-            self.internal_data = []
+        self.internal_data = []
+
+    def default_values():
 
     def insert(self, json):
         errors = self.validator.validate(json)

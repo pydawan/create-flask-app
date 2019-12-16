@@ -90,7 +90,7 @@ def copy_util(dst):
                 print('/', end='')
 
 def field_type(field):
-        prefixos = {
+        types = {
                 'nm': {
                         "type":'Str',
                         "default": "12"
@@ -117,14 +117,14 @@ def field_type(field):
                 },
                 'dt': {
                         "type":'Date',
-                        "default": '2019-12-12'
+                        "default": '"2019-12-12"'
                 }
         }
-        result = prefixos.get(
+        result = types.get(
                 field[:2],
                 {
                         "type": 'Str',
-                        "default": "000"
+                        "default": '"???"'
                 }
         )
         return result['type'], result['default']
@@ -162,12 +162,12 @@ def exec_cmd():
                         print('+', end = '')
                 for part in ['model', 'resource', 'service', 'tests']:
                         lista_nested = item.get('nested', [])
+                        file_name = item['tabela']
                         if part == 'resource':
                                 for sub in ['res_por_id.py', 'todos_res.py']:
-                                        name = item['tabela']
                                         if sub[:4] == 'todo':
-                                                name += 's'
-                                        target = sub.replace('res', name)
+                                                file_name += 's'
+                                        target = sub.replace('res', file_name)
                                         grava_template(
                                                 part,
                                                 [sub, target],
@@ -182,11 +182,13 @@ def exec_cmd():
                                         tabelas += f'    {nested.lower()} = Nested({nested}Model)\n'
                                 item['imports'] = imports
                                 item['nested'] = tabelas
+                        elif part == 'tests':
+                                file_name = 'test_' + file_name
                         grava_template(
                                 part,
                                 [
                                         f'{part}.py',
-                                        f"{item['tabela']}.py"
+                                        f"{file_name}.py"
                                 ],
                                 item
                         )
