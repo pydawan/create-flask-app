@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from flask import Flask, Blueprint, jsonify
 from flask_restful import Api
 from flask_cors import CORS
@@ -39,6 +40,13 @@ def swagger_details(args):
 %swagger_details%    
     ignore = False
     return model, resource, docstring, ignore
+
+logging.basicConfig(
+    filename='Lendico.log',
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 APP = Flask(__name__)
 CORS(APP)
