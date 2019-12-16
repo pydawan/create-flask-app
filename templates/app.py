@@ -42,7 +42,7 @@ def swagger_details(args):
     return model, resource, docstring, ignore
 
 logging.basicConfig(
-    filename='Lendico.log',
+    filename='%nome_API%.log',
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S'
