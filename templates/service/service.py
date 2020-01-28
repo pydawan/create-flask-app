@@ -1,6 +1,6 @@
 import logging
 from model.%tabela% import %tabela%Model
-from util.dynamo_table import DynamoTable
+from util.%import_classe_dados% import %classe_dados%
 from util.messages import (
     resp_erro,
     resp_not_found,
@@ -14,7 +14,7 @@ class %tabela%Service:
         if table:
             self.table = table
         else:
-            self.table = DynamoTable(%tabela%Model, '%tabela%')
+            self.table = %classe_dados%(%tabela%Model, '%tabela%', %extra%)
 
     def find(self, params, %campo%=None):
         if %campo%:

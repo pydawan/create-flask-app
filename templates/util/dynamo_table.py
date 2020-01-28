@@ -18,7 +18,7 @@ class DynamoTable:
 
     existing = []
 
-    def __init__(self, schema, table_name, local_connection=True):
+    def __init__(self, schema, table_name, local_connection):
         self.validator = schema()
         map_dict = {}
         key_list = []
