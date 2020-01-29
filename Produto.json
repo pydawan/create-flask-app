@@ -1,0 +1,23 @@
+{
+    "tabelas": [
+        {
+            "tabela": "Categoria",
+            "campo": "idCategoria"
+        },
+        {
+            "tabela": "Compra",
+            "campo": "dtCompra"
+        },
+        {
+            "tabela": "Cotacao",
+            "campo": "vlCotacao"
+        },
+        {
+            "tabela": "Produto",
+            "nested": [
+                "Categoria", "Compra", "Cotacao"
+            ],
+            "campo": "nmProduto"
+        }
+    ]
+}

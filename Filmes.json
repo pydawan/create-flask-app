@@ -1,0 +1,35 @@
+{
+    "tabelas": [
+        {
+            "tabela": "Genero",
+            "campo": "idGenero"
+        },
+        {
+            "tabela": "Exibicao",
+            "campo": "dtExibicao"
+        },
+        {
+            "tabela": "Nota",
+            "campo": "vlNota"
+        },
+        {
+            "tabela": "Filme",
+            "nested": [
+                "Genero", "Exibicao", "Nota"
+            ]
+        },
+        {
+            "tabela": "Ator",
+            "campo": "nmAtor"
+        }
+    ],
+    "db_config": {
+		"dialect": "postgresql",
+		"driver": "psycopg2",
+		"username": "postgres",
+		"password": "xxxxx",
+		"host": "localhost",
+		"port": 5432,
+		"database":"movies"
+    }
+}
