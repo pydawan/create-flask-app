@@ -127,7 +127,7 @@ class SqlTable:
         Pesquisa um registro no banco de dados
         """
         return self.find_all(
-            0,
+            1,
             'WHERE {}'.format(
                 self.get_conditions(values)
             )
