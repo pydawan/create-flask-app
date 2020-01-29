@@ -3,6 +3,8 @@ import sys
 import json
 import shutil
 
+VERSAO_ATUAL = '0.2'
+
 def renderiza(pasta, arquivo, params, gravar=True):
         if isinstance(arquivo, list):
                 origem = os.path.join('templates', pasta, arquivo[0])
@@ -76,21 +78,20 @@ def carrega_json(arquivo):
 def exec_cmd():
         if len(sys.argv) < 2:
                 print("""
-                *** Create-Flask-App ***
+                *** Create-Flask-App {} ***
 
                 Uso:
                 > python create_flask_app.py <arquivo Json>
 
                 Exemplo:
                 > python create_flask_app.py Filmes
-                """)
+                """.format(
+                        VERSAO_ATUAL
+                        )
+                )
                 return
         arquivo = os.path.splitext(sys.argv[1])[0]
         tabelas, config_sql = carrega_json(arquivo + '.json')
-        print('-'*50)
-        print('tabelas = ', tabelas)
-        print('config_sql = ', config_sql)
-        print('-'*50)
         resumo = {}
         resumo['nome_API'] = sys.argv[1]
         for info in tabelas:
