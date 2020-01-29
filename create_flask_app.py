@@ -93,9 +93,9 @@ def exec_cmd():
         arquivo = os.path.splitext(sys.argv[1])[0]
         tabelas, config_sql = carrega_json(arquivo + '.json')
         resumo = {}
-        resumo['nome_API'] = sys.argv[1]
+        resumo['nome_API'] = arquivo
         for info in tabelas:
-                info['nome_API'] = sys.argv[1]
+                info['nome_API'] = arquivo
                 if 'campo' not in info:
                         info['campo'] = 'id'
                 info['tipo'], info['default'] = field_type(info['campo'])

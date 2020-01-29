@@ -88,7 +88,7 @@ class SqlTable:
         """
         return self.save_data(json, False)
 
-    def find_all(self, filter_expr=''):
+    def find_all(self, limit=0, filter_expr=''):
         """
         Varre (SCAN) todos os registro da tabela
 
@@ -108,6 +108,8 @@ class SqlTable:
                 value = item[1]
                 record[key] = value
             result.append(record)
+            if len(result) == limit:
+                break
         return result
 
     def get_conditions(self, values):
@@ -125,6 +127,7 @@ class SqlTable:
         Pesquisa um registro no banco de dados
         """
         return self.find_all(
+            0,
             'WHERE {}'.format(
                 self.get_conditions(values)
             )
